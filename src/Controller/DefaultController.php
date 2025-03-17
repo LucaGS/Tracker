@@ -7,9 +7,7 @@ use Symfony\Component\Routing\Annotation\Route;
 
 class DefaultController extends AbstractController
 {
-    /**
-     * @Route("/", name="homepage")
-     */
+    #[Route('/')]
     public function index(): Response
     {
         return new Response('<html><body><h1>Alles läuft!</h1></body></html>');
