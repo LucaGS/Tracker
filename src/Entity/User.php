@@ -1,13 +1,12 @@
 <?php
-
+// src/Entity/User.php
 namespace App\Entity;
 
-use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-#[ORM\Entity(repositoryClass: UserRepository::class)]
-#[ORM\Table(name: '`user`')]
-class User
+#[ORM\Entity]
+class User implements PasswordAuthenticatedUserInterface
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -33,7 +32,6 @@ class User
     public function setName(string $name): static
     {
         $this->name = $name;
-
         return $this;
     }
 
@@ -45,7 +43,14 @@ class User
     public function setPassword(string $password): static
     {
         $this->password = $password;
-
         return $this;
+    }
+
+    /**
+     * Gibt das Passwort zurück, das gehasht werden soll
+     */
+    public function getUserIdentifier(): string
+    {
+        return (string) $this->name;
     }
 }
