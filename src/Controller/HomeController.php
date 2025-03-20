@@ -10,6 +10,6 @@ class HomeController extends AbstractController
     #[Route('/test')]
     public function index(): Response
     {
-        return new Response('<html><body><h1>Alles läuft!</h1></body></html>');
+        return new Response('<html><body><h1>Alles läuft!</h1></body></html>' );
     }
 }
