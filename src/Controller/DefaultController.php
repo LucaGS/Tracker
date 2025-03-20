@@ -11,7 +11,7 @@ class DefaultController extends AbstractController
 
     #[Route('/')]
     public function index(): Response
-    {   $content = '<html><body>default: '.env('token').'</body></html>';
+    {   $content = '<html><body>default:</body></html>';
         return new Response(content: $content);
     }
 
