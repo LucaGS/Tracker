@@ -8,16 +8,16 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
+
 class TestController extends AbstractController
 {
     // Alle Tests abrufen
     #[Route('/api/tests', methods: ['GET'])]
-    public function getTests(EntityManagerInterface $em, ParameterBagInterface $params): JsonResponse
+    public function getTests(EntityManagerInterface $em, ): JsonResponse
     {
-        $tests = $em->getRepository(Test::class)->findAll();
-        $token = $params->get('app.token');
-
+        $platformVariables = json_decode($_ENV['PLATFORM_VARIABLES'] ?? '{}', true);
+        $token = $platformVariables['Token'] ?? 'default-wert';
+        
         return $this->json(['token' => $token]);
     }
 

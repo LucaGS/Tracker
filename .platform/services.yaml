@@ -2,6 +2,5 @@
 database:
     type: postgresql:16
     disk: 1024
-parameters:
-    app.token: '%env(resolve:TOKEN)%'
+
 
