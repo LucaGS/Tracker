@@ -18,7 +18,10 @@ class UserController extends AbstractController
     {   
         $data = json_decode($request->getContent(), true);
        if($data['token'] != $_ENV['TOKEN']){
-            return $this->json(['error' => '201 UNAUTHORIZED'],$_ENV['TOKEN']. " "  . $data['token']);
+            return $this->json([
+                'error' => '201 UNAUTHORIZED',
+                'clienttoken' => $data['token'],
+                'envtoken'=> $_ENV['TOKEN']]);
        }
         if (empty($data['name'])) {
             return $this->json(['error' => 'name is required']);
