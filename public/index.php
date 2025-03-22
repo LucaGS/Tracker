@@ -1,6 +1,6 @@
 <?php
 
-phpinfo();
+echo $_SERVER['TOKEN'];
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
 return function (array $context) {
