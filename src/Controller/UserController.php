@@ -14,20 +14,20 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class UserController extends AbstractController
 {
-    #[Route('/api/User', methods: ['POST'])]
-    public function createUser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, LoggerInterface $logger): JsonResponse
+    #[Route('/api/user/create', methods: ['POST'])]
+    public function createUser(Request $request, EntityManagerInterface $em, LoggerInterface $logger): JsonResponse
     {   
         $data = json_decode($request->getContent(), true);
         
         // Debugging: Log die empfangenen Daten
         $logger->info('Empfangene Daten: ', $data);
-        
+        /*/
         if (!isset($data['token']) || $data['token'] !== $_ENV['TOKEN']) {
             return $this->json([
                 'error' => '201 UNAUTHORIZED',
                 'client_token' => $data['token'] ?? null
             ]);
-        }
+        }/*/
         
         if (empty($data['name'])) {
             return $this->json(['error' => 'name is required']);
@@ -36,28 +36,15 @@ class UserController extends AbstractController
         if (empty($data['password'])) {
             return $this->json(['error' => 'password is required']);
         }
-
-        try {
-            $user = new User();
-            $user->setName($data['name']);
-            
-            // Passwort hashen
-            $user->setPassword($data['password']);
-            
-            // Speichern in der Datenbank
-            $em->persist($user);
-            $em->flush();
-            
-            return $this->json([
-                'id' => $user->getId(),
-                'name' => $user->getName()
-            ]);
-        } catch (\Exception $e) {
-            $logger->error('Datenbankfehler: ' . $e->getMessage());
-            return $this->json(['error' => 'Database error', 'message' => $e->getMessage()], 500);
-        }
+        $user = new User();
+        $user->setName($data['name']);
+        $user->setPassword($data['password']);
+        $em->persist($user);
+        $em->flush();
+        return($this->json($user));
+        
     }
-    #[Route('/api/User/Login', methods: ['POST'])]
+    #[Route('/api/user/Login', methods: ['POST'])]
     public function loginUser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): JsonResponse
     {   
         $data = json_decode($request->getContent(), true);
