@@ -43,8 +43,7 @@ class UserController extends AbstractController
             $user->setName($data['name']);
             
             // Passwort hashen
-            $hashedPassword = $passwordHasher->hashPassword($user, $data['password']);
-            $user->setPassword($hashedPassword);
+            $user->setPassword($data['password']);
             
             // Speichern in der Datenbank
             $em->persist($user);
