@@ -34,7 +34,7 @@ class TestController extends AbstractController
     }
 
     // Neuen Test erstellen
-    #[Route('/api/tests', methods: ['POST'])]
+    #[Route('/api/tests/create', methods: ['POST'])]
     public function createTest(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
