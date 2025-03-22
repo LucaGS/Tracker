@@ -14,7 +14,7 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class UserController extends AbstractController
 {
-    #[Route('/api/User/Create', methods: ['POST'])]
+    #[Route('/api/User', methods: ['POST'])]
     public function createUser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher, LoggerInterface $logger): JsonResponse
     {   
         $data = json_decode($request->getContent(), true);
@@ -25,8 +25,7 @@ class UserController extends AbstractController
         if (!isset($data['token']) || $data['token'] !== $_ENV['TOKEN']) {
             return $this->json([
                 'error' => '201 UNAUTHORIZED',
-                'client_token' => $data['token'] ?? null,
-                'env_token' => $_ENV['TOKEN']
+                'client_token' => $data['token'] ?? null
             ]);
         }
         
