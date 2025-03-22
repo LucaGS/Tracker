@@ -39,7 +39,6 @@ class TestController extends AbstractController
     public function createTest(Request $request, EntityManagerInterface $em): JsonResponse
     {
         $data = json_decode($request->getContent(), true);
-
         if (empty($data['testname'])) {
             return $this->json(['error' => 'Test name is required'], 400);
         }
@@ -49,7 +48,6 @@ class TestController extends AbstractController
 
         $em->persist($test);
         $em->flush();
-
         return $this->json($test, 201);
     }
 
