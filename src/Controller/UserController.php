@@ -17,8 +17,8 @@ class UserController extends AbstractController
     public function createUser(Request $request, EntityManagerInterface $em, UserPasswordHasherInterface $passwordHasher): JsonResponse
     {   
         $data = json_decode($request->getContent(), true);
-       if($data['token'] != $_ENV['env:token']){
-        return $this->json(['error' => '201 UNAUTHORIZED']);
+       if($data['token'] != $_ENV['APP_SECRET']){
+            return $this->json(['error' => '201 UNAUTHORIZED']);
        }
         if (empty($data['name'])) {
             return $this->json(['error' => 'name is required']);
