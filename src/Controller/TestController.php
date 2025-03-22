@@ -16,8 +16,8 @@ class TestController extends AbstractController
     #[Route('/api/tests', methods: ['GET'])]
     public function getTests(EntityManagerInterface $em,ParameterBagInterface $params ): JsonResponse
     {   
-        $token = $params->get('app.token');
-        return $this->json(['token' => $token]);
+        $tests = $em->getRepository(Test::class)->findAll();
+        return $this->json($tests);
     }
 
     // Einzelnen Test abrufen
