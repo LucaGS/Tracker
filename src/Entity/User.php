@@ -1,12 +1,13 @@
 <?php
-// src/Entity/User.php
+
 namespace App\Entity;
 
+use App\Repository\UserRepository;
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\PasswordAuthenticatedUserInterface;
 
-#[ORM\Entity]
-class User implements PasswordAuthenticatedUserInterface
+#[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\Table(name: '`user`')]
+class User
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
@@ -18,6 +19,9 @@ class User implements PasswordAuthenticatedUserInterface
 
     #[ORM\Column(length: 255)]
     private ?string $password = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $mail = null;
 
     public function getId(): ?int
     {
@@ -32,6 +36,7 @@ class User implements PasswordAuthenticatedUserInterface
     public function setName(string $name): static
     {
         $this->name = $name;
+
         return $this;
     }
 
@@ -43,14 +48,19 @@ class User implements PasswordAuthenticatedUserInterface
     public function setPassword(string $password): static
     {
         $this->password = $password;
+
         return $this;
     }
 
-    /**
-     * Gibt das Passwort zurück, das gehasht werden soll
-     */
-    public function getUserIdentifier(): string
+    public function getMail(): ?string
     {
-        return (string) $this->name;
+        return $this->mail;
+    }
+
+    public function setMail(string $mail): static
+    {
+        $this->mail = $mail;
+
+        return $this;
     }
 }
