@@ -13,7 +13,19 @@ use Symfony\Component\Routing\Annotation\Route;
 use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 class UserController extends AbstractController
-{
+{    #[Route('/api/user', methods: ['GET'])]
+    public function getAllUsers(EntityManagerInterface $em): JsonResponse
+    {
+        $users = $em->getRepository(User::class)->findAll();
+    
+        $userArray = array_map(fn($user) => [
+            'id' => $user->getId(),
+            'name' => $user->getName()
+        ], $users);
+    
+        return $this->json($userArray);
+    }
+    
     #[Route('/api/user/create', methods: ['POST'])]
     public function createUser(Request $request, EntityManagerInterface $em, LoggerInterface $logger): JsonResponse
     {   
