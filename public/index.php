@@ -1,5 +1,5 @@
 <?php
-var_dump($_ENV);
+
 use App\Kernel;
 require_once dirname(__DIR__).'/vendor/autoload_runtime.php';
 
