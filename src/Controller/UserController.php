@@ -60,7 +60,8 @@ class UserController extends AbstractController
         $entityManager->persist($user);
         $entityManager->flush();
 
-        return $this->json(['message' => 'User created successfully'], 201);
+        return $this->json(['message' => 'User created successfully',
+    "id"=>$user->getId()], 201);
     }
 
     #[Route('/{id}', methods: ['PUT'])]
