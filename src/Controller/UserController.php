@@ -63,6 +63,29 @@ class UserController extends AbstractController
         return $this->json(['message' => 'User created successfully',
     "id"=>$user->getId()], 201);
     }
+    #[Route('/login',methods:['POST'])]
+    public function loginUser(Request $request, EntityManagerInterface $enityManager):JsonResponse{
+        $data = json_decode($request->getContent(),true);
+        if(!isset($data['mail'],$data['password'])){
+            return ($this->json(["message"=> "mail and password are required"],status:400));
+        }
+        $user = $enityManager->getRepository(User::class)->findOneBy(['mail'=>$data['mail']]);
+        if (!$user) {
+            return $this->json(["message" => "User not found"], 404);
+        }
+        if(!password_verify($data['password'],$user->getPassword())){
+            return ($this->json(["message"=>"Invalid Credentials"],401));
+
+        };
+        return ($this->json(
+            ["message"=>"valid Credentials",
+            "id"=>$user->getId(),
+            "name"=>$user->getName()]
+        ));
+
+
+        
+    }
 
     #[Route('/{id}', methods: ['PUT'])]
     public function updateUser(int $id, Request $request, UserRepository $userRepository, EntityManagerInterface $entityManager): JsonResponse
