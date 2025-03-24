@@ -32,7 +32,7 @@ class ExcerciseController extends AbstractController {
         $excercise->setUserid($data['userid']);
         $entityManager->persist($excercise);
         $entityManager->flush();
-        return $this->json($excercise);
+        return $this->json($excercise ,201);
 
     }
     #[Route('/user/{userid}/{trainingplanid}', methods: ['POST'])]
