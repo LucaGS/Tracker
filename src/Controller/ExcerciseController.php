@@ -19,7 +19,7 @@ class ExcerciseController extends AbstractController {
         return $this->json($excercises);
     }
     #[Route('/create', methods: ['POST'])]
-    public function createExcercise(Request $request,EntityManagerInterface $entityManager, ExcerciseRepository $excerciseRepository){
+    public function createExcercise(Request $request,EntityManagerInterface $entityManager,){
        $data = json_decode($request->getContent(),true);
 
         if(!isset($data['userid'], $data['trainingplanid'],$data['name'],$data['sets'])){
@@ -36,10 +36,11 @@ class ExcerciseController extends AbstractController {
 
     }
     #[Route('/user/{userid}/{trainingplanid}', methods: ['POST'])]
-    public function getUserExcercises(int $userid ,int $trainingplanid,EntityManagerInterface $entityManager, ExcerciseRepository $excerciseRepository){
+    public function getUserExcercises(int $userid ,int $trainingplanid, ExcerciseRepository $excerciseRepository){
         $excercises = $excerciseRepository->findBy(
-            criteria: ["userid" => $userid,
-        ["trainingplanid"=>$trainingplanid]],);
+            criteria:
+            ["userid" => $userid,
+            ["trainingplanid"=>$trainingplanid]],);
         return $this->json($excercises, 201);
     }
 }
