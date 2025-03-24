@@ -9,6 +9,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
+use function PHPUnit\Framework\returnArgument;
 
 #[Route('/api/trainingplan', name: 'api_trainingplan_')]
 class TrainingplanController extends AbstractController
@@ -20,7 +21,11 @@ class TrainingplanController extends AbstractController
         return $this->json($plans);
     }
 
-   
+    #[Route("user/{userid}", methods:['GET'])]
+    public function getUserPlans(TrainingplanRepository $repository, int $userid){
+        $plans = $repository->findOneBy(["userid"=>$userid]);
+        return($this->json($plans));
+    }
 
 
     #[Route('/{id}', methods: ['GET'])]
