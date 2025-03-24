@@ -35,12 +35,12 @@ class ExcerciseController extends AbstractController {
         return $this->json($excercise ,201);
 
     }
-    #[Route('/user/{userid}/{trainingplanid}', methods: ['POST'])]
+    #[Route('/user/{userid}/{trainingplanid}', methods: ['GET'])]
     public function getUserExcercises(int $userid ,int $trainingplanid, ExcerciseRepository $excerciseRepository){
-        $excercises = $excerciseRepository->findBy(
-            criteria:
-            ["userid" => $userid,
-            ["trainingplanid"=>$trainingplanid]],);
+        $excercises = $excerciseRepository->findBy([
+            "userid" => $userid,
+            "trainingplanid" => $trainingplanid
+        ]);
         return $this->json($excercises, 201);
     }
 }
