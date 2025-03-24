@@ -19,6 +19,14 @@ class TrainingplanController extends AbstractController
         $plans = $repository->findAll();
         return $this->json($plans);
     }
+    #[Route('/user/{userId}', methods: ['GET'])]
+    public function GetUserTrainingplans(int $userId,TrainingplanRepository $repository): JsonResponse
+    {
+        $plans = $repository->findOneBy(["userid"=> $userId]);
+        return $this->json($plans);
+    }
+    
+
 
     #[Route('/{id}', methods: ['GET'])]
     public function show(Trainingplan $trainingplan): JsonResponse
