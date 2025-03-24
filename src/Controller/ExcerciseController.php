@@ -18,7 +18,7 @@ class ExcerciseController extends AbstractController {
         $excercises = $excerciseRepository->findAll();
         return $this->json($excercises);
     }
-    #[Route('/create', methods: ['POST'])]
+    #[Route('/', methods: ['POST'])]
     public function createExcercise(Request $request,EntityManagerInterface $entityManager,){
        $data = json_decode($request->getContent(),true);
 
