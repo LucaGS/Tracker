@@ -23,7 +23,7 @@ class TrainingplanController extends AbstractController
 
     #[Route("/user/{userid}", methods:['GET'])]
     public function getUserPlans(TrainingplanRepository $repository, int $userid){
-        $plans = $repository->findOneBy(["userid"=>$userid]);
+        $plans = $repository->findBy(["userid"=>$userid]);
         return($this->json($plans));
     }
 
