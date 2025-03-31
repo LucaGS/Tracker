@@ -13,12 +13,12 @@ use Symfony\Component\DependencyInjection\ParameterBag\ParameterBagInterface;
 
 #[Route('/api/excercise', name: 'api_excercise_')]
 class ExcerciseController extends AbstractController {
-    #[Route('/', methods: ['GET'])]
+    #[Route('', methods: ['GET'])]
     public function index( ExcerciseRepository $excerciseRepository):JsonResponse{
         $excercises = $excerciseRepository->findAll();
         return $this->json($excercises);
     }
-    #[Route('/', methods: ['POST'])]
+    #[Route('', methods: ['POST'])]
     public function createExcercise(Request $request,EntityManagerInterface $entityManager,){
        $data = json_decode($request->getContent(),true);
 
@@ -35,11 +35,12 @@ class ExcerciseController extends AbstractController {
         return $this->json($excercise ,201);
 
     }
-    #[Route('/user/{userid}/{trainingplanid}', methods: ['GET'])]
+    #[Route('/{userid}/{trainingplanid}', methods: ['GET'])]
     public function getUserExcercises(int $userid ,int $trainingplanid, ExcerciseRepository $excerciseRepository){
         $excercises = $excerciseRepository->findBy([
             "userid" => $userid,
             "trainingplanid" => $trainingplanid
+        
         ]);
         return $this->json($excercises, 201);
     }
