@@ -22,9 +22,19 @@ class ExcerciseController extends AbstractController {
     public function createExcercise(Request $request,EntityManagerInterface $entityManager,){
        $data = json_decode($request->getContent(),true);
 
-        if(!isset($data['userid'], $data['trainingplanid'],$data['name'],$data['sets'])){
-            return $this->json(["error"=> "userid, trainplanid, name, sets are required"]);
+        if(!isset($data['userid'])){
+            return $this->json(["error"=> "userid"]);
         }
+        if(!isset($data['trainingplanid'])){
+            return $this->json(["error" => "trainingplan id Required"]);
+        }
+        if(!isset($data['name'])){
+            return $this->json(["error" => "name  Required"]);
+        }
+        if(!isset($data['sets'])){
+            return $this->json(["error" => "sets  Required"]);
+        }
+
         $excercise = new Excercise();
         $excercise->setName($data['name']);
         $excercise->setSets($data['sets']);
