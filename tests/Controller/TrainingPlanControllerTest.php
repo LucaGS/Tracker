@@ -52,7 +52,7 @@ class TrainingplanControllerTest extends TransactionalTestCase
     {
         $plan = new Trainingplan();
         $plan->setName('Old Name');
-        $plan->setUserid(10);
+        $plan->setUserid(99999999);
         $this->em->persist($plan);
         $this->em->flush();
 
@@ -66,7 +66,7 @@ class TrainingplanControllerTest extends TransactionalTestCase
 
         $updated = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertEquals('Updated Name', $updated['name']);
-        $this->assertEquals(10, $updated['userid']); // sollte unverändert sein
+        $this->assertEquals(99999999, $updated['userid']); // sollte unverändert sein
     }
 
     public function testDeleteTrainingplan(): void

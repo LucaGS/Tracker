@@ -14,29 +14,6 @@ use Symfony\Component\Routing\Annotation\Route;
 use function PHPUnit\Framework\isEmpty;
 #[Route('/api/startedtraining', name: 'api_trainingplan_')]
 class StartedtrainingController extends AbstractController{
-    #[Route(path:"", methods:["GET"])]
-    public function index( StartedtrainingRepository $repositry):JsonResponse{
-        $trainings = $repositry->findAll();
-        return $this->json($trainings);
-        
-    }
-    #[Route(path:'', methods:["POST"])]
-    public function create(Request $request, EntityManagerInterface $em){
-        $data = json_decode($request->getContent());
-        if(!empty($data['userid'])){
-            $this->json(["error"=>"userid is required"]);
 
-        }
-        if(!empty($data['trainingplanid'])){
-            $this->json(["error"=>"trainingplanid is required"]);
-            
-        }
-        $startedTraining = new Startedtraining();
-        $startedTraining->setTrainingplanid($data['trainingplanid']);
-        $startedTraining->setUserid($data['userid']);
-        $em->persist($startedTraining);
-        $em->flush();
-        return $this->json($startedTraining, 201);
-
-    }
+    
 }
