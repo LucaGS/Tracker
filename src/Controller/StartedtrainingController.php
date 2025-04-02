@@ -37,6 +37,7 @@ class StartedtrainingController extends AbstractController{
         if (!$startedTraining) {
             return $this->json(['error' => 'Started training not found'], 404);
         }
+        
         return $this->json($startedTraining);
     }
     
