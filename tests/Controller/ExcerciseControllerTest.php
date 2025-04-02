@@ -57,28 +57,28 @@ class ExcerciseControllerTest extends TransactionalTestCase
 
     public function testGetUserExcercisesByPlan(): void
     {
-        $uid = 5555;
+        $userid = 5555;
         $planid = 4444;
 
         $ex1 = new Excercise();
         $ex1->setName('Squat');
         $ex1->setSets(3);
-        $ex1->setUserid($uid);
+        $ex1->setUserid($userid);
         $ex1->setTrainingplanid($planid);
 
         $ex2 = new Excercise();
         $ex2->setName('Deadlift');
         $ex2->setSets(4);
-        $ex2->setUserid($uid);
+        $ex2->setUserid($userid);
         $ex2->setTrainingplanid($planid);
 
         $this->em->persist($ex1);
         $this->em->persist($ex2);
         $this->em->flush();
 
-        $this->client->request('GET', "/api/excercise/$uid/$planid");
+        $this->client->request('GET', "/api/excercise/$userid/$planid");
 
-        $this->assertResponseStatusCodeSame(201); // wie im Controller
+        $this->assertResponseStatusCodeSame(200); // wie im Controller
         $response = json_decode($this->client->getResponse()->getContent(), true);
         $this->assertIsArray($response);
         $this->assertCount(2, $response);

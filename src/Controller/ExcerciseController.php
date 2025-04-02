@@ -52,7 +52,7 @@ class ExcerciseController extends AbstractController {
             "trainingplanid" => $trainingplanid
         
         ]);
-        return $this->json($excercises, 201);
+        return $this->json($excercises, 200);
     }
 }
 
