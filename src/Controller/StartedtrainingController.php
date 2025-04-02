@@ -32,7 +32,7 @@ class StartedtrainingController extends AbstractController{
             
         }
         $startedTraining = new Startedtraining();
-        $startedTraining->setTrainingplanid($data['trainingplan']);
+        $startedTraining->setTrainingplanid($data['trainingplanid']);
         $startedTraining->setUserid($data['userid']);
         $em->persist($startedTraining);
         $em->flush();
