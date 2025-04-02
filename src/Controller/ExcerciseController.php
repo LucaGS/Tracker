@@ -42,6 +42,7 @@ class ExcerciseController extends AbstractController {
         $excercise->setUserid($data['userid']);
         $entityManager->persist($excercise);
         $entityManager->flush();
+        
         return $this->json($excercise ,201);
 
     }
