@@ -31,5 +31,12 @@ class StartedtrainingController extends AbstractController{
             $this->json(["error"=>"trainingplanid is required"]);
             
         }
+        $startedTraining = new Startedtraining();
+        $startedTraining->setTrainingplanid($data['trainingplan']);
+        $startedTraining->setUserid($data['userid']);
+        $em->persist($startedTraining);
+        $em->flush();
+        return $this->json($startedTraining, 201);
+
     }
 }
