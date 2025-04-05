@@ -35,6 +35,7 @@ class TrainingplanControllerTest extends TransactionalTestCase
     public function testGetTrainingplanById(): void
     {
         $plan = new Trainingplan();
+        
         $plan->setName('Leg Day');
         $plan->setUserid(99);
         $this->em->persist($plan);
