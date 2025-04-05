@@ -18,9 +18,6 @@ use function PHPUnit\Framework\isEmpty;
 #[Route('/api/startedexcercise', name: 'api_startedexcercise_')]
 class StartedExcerciseController extends AbstractController{
 
-    // Controller logic for handling started exercises
-    // This is a placeholder for the actual implementation
-    // You would typically use Symfony's annotations to define routes and methods here
     #[Route("/", methods:['POST'])]
     public function CreateStartedExcercise(Request $request, EntityManagerInterface $entityManager):JsonResponse{
         $data = json_decode($request->getContent(), true);
@@ -60,7 +57,7 @@ class StartedExcerciseController extends AbstractController{
         if (!$startedExcercises) {
             return $this->json(['error' => 'Started excercise not found userid:'. $userid ." Excercise id:". $excerciseid], 404);
         }
-        
+        $excerciseDate = $startedExcercises[0]->getStartedtrainingplanid();
         return $this->json($startedExcercises, 200);
     }
     

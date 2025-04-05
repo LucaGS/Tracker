@@ -25,6 +25,7 @@ class StartedtrainingController extends AbstractController{
             return $this->json(['error' => 'Training Plan ID is required'], 400);
         }
         $startedTraining = new Startedtraining();
+        $startedTraining->setDate(new \DateTimeImmutable());
         $startedTraining->setUserid($data['userid']);
         $startedTraining->setTrainingplanid($data['trainingplanid']);
         $entityManager->persist($startedTraining);
