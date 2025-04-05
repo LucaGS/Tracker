@@ -3,6 +3,7 @@ namespace App\Controller;
 use App\Entity\Startedexcercise;
 use App\Entity\Startedtraining;
 use App\Entity\Trainingplan;
+use App\Repository\StartedexcerciseRepository;
 use App\Repository\StartedtrainingRepository;
 use phpDocumentor\Reflection\DocBlock\Tags\Method;
 use Symfony\Component\HttpFoundation\Request;
@@ -45,10 +46,19 @@ class StartedExcerciseController extends AbstractController{
         return $this->json($startedExcercise, 201);
     }
     #[Route("/{userid}/{trainingplanid}", methods:['GET'])]
-    public function getStartedExcercisesByUserIdAndTrainingplanId(StartedtrainingRepository $repository, int $userid, int $trainingplanid):JsonResponse{
+    public function getStartedExcercisesByUserIdAndTrainingplanId(StartedexcerciseRepository $repository, int $userid, int $trainingplanid):JsonResponse{
         $startedExcercises = $repository->findBy(['userid' => $userid, 'trainingplanid' => $trainingplanid]);
         if (!$startedExcercises) {
-            return $this->json(['error' => 'Started excercise not found'. $userid . $trainingplanid], 404);
+            return $this->json(['error' => 'Started excercise not found userid:'. $userid ." Trainingplan id:". $trainingplanid], 404);
+        }
+        
+        return $this->json($startedExcercises, 200);
+    }
+    #[Route("/{userid}/{excerciseid}", methods:['GET'])]
+    public function getStartedExcercisesByUserIdAndExcerciseId(StartedexcerciseRepository $repository, int $userid, int $excerciseid):JsonResponse{
+        $startedExcercises = $repository->findBy(['userid' => $userid, 'excerciseid' => $excerciseid]);
+        if (!$startedExcercises) {
+            return $this->json(['error' => 'Started excercise not found userid:'. $userid ." Excercise id:". $excerciseid], 404);
         }
         
         return $this->json($startedExcercises, 200);

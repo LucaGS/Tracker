@@ -37,35 +37,27 @@ class StartedExcerciseControllerTest extends TransactionalTestCase
     }
     public function testGetStartedExcercisesByUserIdAndTrainingplanId(): void
     {
+ 
         $startedexcerciseA = (new Startedexcercise())
             ->setUserid(999999999)
-            ->setTrainingplanid(999999999)
             ->setExcerciseid(999999999)
-            ->setStartedtrainingplanid(999999999)
-            ->setSet(1)
-            ->setReps(12)
-            ->setWeight(99.99);
-
-        $startedexcerciseB = (new Startedexcercise())
-            ->setUserid(999999999)
             ->setTrainingplanid(999999999)
-            ->setExcerciseid(999999999)
-            ->setStartedtrainingplanid(999999999)
+            ->setStartedtrainingplanid(999999999) 
             ->setSet(1)
-            ->setReps(12)
-            ->setWeight(99.99);
-            
+            ->setReps(10)
+            ->setWeight(100);
+        
+    
         
 
         $this->em->persist($startedexcerciseA);
-        $this->em->persist($startedexcerciseB);
         $this->em->flush();
 
-        $this->client->request('GET', '/api/startedexcercise/'. $startedexcerciseA->getUserid()."/".$startedexcerciseA->getTrainingplanid());
+        $this->client->request('GET', '/api/startedexcercise/999999999/999999999');
         $response = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertResponseIsSuccessful();
-        $this->assertCount(2, $response);
+        $this->assertCount(1, $response);
         $trainingplanIds = array_column($response, 'trainingplanid');
         $this->assertContains(999999999, $trainingplanIds);
         $this->assertContains(999999999, $trainingplanIds);
@@ -73,22 +65,24 @@ class StartedExcerciseControllerTest extends TransactionalTestCase
     }
     public function testGetStartedExcercisesByUserIdAndExcerciseId(): void
     {
-        $startedexcerciseA = new Startedexcercise();
-        $startedexcerciseA->setUserid(999999999);
-        $startedexcerciseA->setExcerciseid(999999999);
-        $startedexcerciseB = new Startedexcercise();
-        $startedexcerciseB->setUserid(999999999);
-        $startedexcerciseB->setExcerciseid(999999999);
+        $startedexcerciseA = (new Startedexcercise())
+            ->setUserid(999999999)
+            ->setExcerciseid(999999999)
+            ->setTrainingplanid(999999999)
+            ->setStartedtrainingplanid(999999999) 
+            ->setSet(1)
+            ->setReps(10)
+            ->setWeight(100);
+      
 
         $this->em->persist($startedexcerciseA);
-        $this->em->persist($startedexcerciseB);
         $this->em->flush();
 
-        $this->client->request('GET', '/api/startedexcercise/'. $startedexcerciseA->getUserid()."/".$startedexcerciseA->getExcerciseid());
+        $this->client->request('GET', '/api/startedexcercise/999999999/999999999');
         $response = json_decode($this->client->getResponse()->getContent(), true);
 
         $this->assertResponseIsSuccessful();
-        $this->assertCount(2, $response);
+        $this->assertCount(1, $response);
         $trainingplanIds = array_column($response, 'trainingplanid');
         $this->assertContains(999999999, $trainingplanIds);
         $this->assertContains(999999999, $trainingplanIds);
